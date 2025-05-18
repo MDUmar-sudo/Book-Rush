@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 const app = express();
 const port = 3000;
-dotenv.config(); // Load environment variables from .env
+dotenv.config(); // Loading environment variables from .env
 
 // reading books.json
 
@@ -59,3 +59,9 @@ insertImage().catch(console.error); */
     console.log('Image saved as retrieved_image.jpg');
 }
 retrieveImage().catch(console.error); */
+
+app.get("/", (req, res) => { });
+
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`);
+});

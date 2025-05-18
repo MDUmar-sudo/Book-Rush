@@ -34,3 +34,14 @@ INSERT INTO books (code, title, writer, isbn, rating, date_read) VALUES
 ('rich', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', '978-1612680194', 8, TO_DATE('12-06-2024', 'DD-MM-YYYY'));
 
 -- book_images are inserted using Javascript with UPDATE cmd
+
+
+-- sorting by title
+SELECT * FROM books ORDER BY title ASC;
+
+-- sorting by the newest
+SELECT * FROM books ORDER BY date_read DESC;
+
+-- sorting by the rating(or the best)
+
+SELECT * FROM books ORDER BY rating DESC;
