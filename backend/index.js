@@ -11,7 +11,7 @@ dotenv.config(); // Loading environment variables from .env
 
 // reading books.json
 
-const books_json = fs.readFileSync(path.join(process.cwd(), "../books.json"), "utf-8");
+const books_json = fs.readFileSync(path.join(process.cwd(), "./books.json"), "utf-8");
 const book = JSON.parse(books_json);
 
 // database connection
@@ -41,8 +41,8 @@ db.connect();
         console.log('Image inserted successfully');
     });
 
-}
-insertImage().catch(console.error); */
+} */
+// insertImage().catch(console.error);
 
 // function to retrieve image from database
 
@@ -60,7 +60,11 @@ insertImage().catch(console.error); */
 }
 retrieveImage().catch(console.error); */
 
-app.get("/", (req, res) => { });
+app.get("/", (req, res) => { res.send("Hello World") });
+
+app.get("/hello", (req, res) => { 
+    res.json({msg: "Hello World"});
+});
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
