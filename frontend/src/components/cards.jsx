@@ -4,11 +4,11 @@ import Info from "./info"
 
 
 
-function Cards() {
+function Cards(props) {
     return (
-        <div className="cards">
-            <Image />
-            <Info />
+        <div className="cards ">
+            <Image image={props.image} />
+            <Info id={props.id} title={props.title} writer={props.writer} isbn={props.isbn} rating={ props.rating} date={props.date}/>
         </div>
     );
 }

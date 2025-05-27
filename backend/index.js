@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 const app = express();
 const port = 3000;
-dotenv.config(); // Loading environment variables from .env
+dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
 
 // reading books.json
 
@@ -21,7 +21,7 @@ const db = new pg.Client({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.DB_PORT, 10),
+    port: Number(process.env.DB_PORT),
 });
 db.connect();
 
@@ -62,9 +62,35 @@ retrieveImage().catch(console.error); */
 
 app.get("/", (req, res) => { res.send("Hello World") });
 
-app.get("/hello", (req, res) => { 
-    res.json({msg: "Hello World"});
+/* 
+    GET request to fetch all books information from the database
+*/
+
+app.get("/books", async (req, res) => {
+
+   try{ const result = await db.query('SELECT * FROM books ORDER BY rating DESC');
+    const books = result.rows.map((book) => {
+        return {
+            code: book.code,
+            title: book.title,
+            writer: book.writer,
+            isbn: book.isbn,
+            rating: book.rating,
+            date_read: book.date_read,
+            book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null
+        };
+    });
+    res.json(books);
+   } catch (err) {
+       console.error('Error fetching books:', err);
+       res.status(500).json({ error: 'Internal Server Error' });
+    }
+    
 });
+
+/* 
+    LISTENING TO PORT 3000
+*/
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);

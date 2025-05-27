@@ -6,28 +6,28 @@ import Cards from './cards'
 import './App.css'
 
 function App() {
-  const[msg, setMessage] = useState('')
-  const message = async () => {
+
+  const [books, setBooks] = useState([]);
+
+  const fetchBooks = async () => {
     try {
-      const response = await fetch('/api/hello');
+      const response = await fetch('/api/books');
       const data = await response.json();
-      setMessage(data.msg);
-      console.log(data);
+      setBooks(data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching books data:', error);
     }
   };
 
-  useEffect(() => { message(); }, []);
+  useEffect(() => { fetchBooks(); }, []);
 
   return(
     <div>
-      <p>My message {msg}</p>
     <Head />
     <Sort />
     <Faq />
-    <hr />
-    <Cards/>
+      <hr />
+      {books.map((book, index) =>  <Cards key={index} id={book.code} title={book.title} writer={book.writer} isbn={book.isbn} rating={ book.rating} date={book.date_read} image={book.book_image} />)}
   </div >  
   );
 };
