@@ -27,7 +27,17 @@ function App() {
     <Sort />
     <Faq />
       <hr />
-      {books.map((book, index) =>  <Cards key={index} id={book.code} title={book.title} writer={book.writer} isbn={book.isbn} rating={ book.rating} date={book.date_read} image={book.book_image} />)}
+      {books.map((book, index) => <Cards
+        key={index}
+        id={book.code}
+        title={book.title}
+        writer={book.writer}
+        isbn={book.isbn}
+        rating={book.rating}
+        date={book.date_read}
+        image={book.book_image}
+        summary={book.summary}
+        link={book.buying_link} />)}
   </div >  
   );
 };

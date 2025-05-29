@@ -68,8 +68,9 @@ app.get("/", (req, res) => { res.send("Hello World") });
 
 app.get("/books", async (req, res) => {
 
-   try{ const result = await db.query('SELECT * FROM books ORDER BY rating DESC');
-    const books = result.rows.map((book) => {
+   try{ const result = await db.query('SELECT * FROM books ORDER BY id');
+       const books = result.rows.map((book) => {
+           
         return {
             code: book.code,
             title: book.title,
@@ -77,9 +78,13 @@ app.get("/books", async (req, res) => {
             isbn: book.isbn,
             rating: book.rating,
             date_read: book.date_read,
-            book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null
+            book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null,
+            summary: book.summary,
+            buying_link: book.buying_link
         };
-    });
+        
+       });
+       console.log(books[0].summary);
     res.json(books);
    } catch (err) {
        console.error('Error fetching books:', err);

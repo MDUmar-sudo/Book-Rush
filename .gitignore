@@ -11,3 +11,5 @@ backend/node_modules
 /frontend/.env
 /backend/.env*
 /backend/.env
+
+assets/Book Cover

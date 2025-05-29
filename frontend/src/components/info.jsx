@@ -3,12 +3,11 @@ import React from "react";
 function Info(props) {
     return (
         <div>
-            <h1><a href="">{props.title} - {props.writer }</a></h1>
+            <h1>{props.title} - {props.writer }</h1>
             <small>Date read: {props.date}. How strongly I recommend it: { props.rating}/10</small>
-            <strong>ISBN {props.isbn}</strong>
-            <p>Everything is negotiable. Challenge authority. You have the power in any situation. This is how to realize it and use it. A must-read classic from 1980 from a master negotiator. My notes here aren’t enough because the little book is filled with so many memorable stories — examples of great day-to-day moments of negotiation that will stick in your head for when you need them. (I especially loved the one about the power of the prisoner in solitary confinement.) So go buy and read the book. I’m giving it a 10/10 rating even though the second half of the book loses steam, because the first half is so crucial.</p>
-            <strong> Read my notes</strong>
-            <p>, or go to the <a href="">Amazon page</a> for details and reviews.</p>
+            <strong> ISBN {props.isbn}</strong>
+            <p style={{whiteSpace:'pre-wrap'}}>{ props.summary}</p>
+            <p><strong> Read my notes</strong>, or go to the <a href={props.link} target="_blank">Amazon page</a> for details and reviews.</p>
         </div>
     );
 };
