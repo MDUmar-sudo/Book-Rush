@@ -8,10 +8,11 @@ import './App.css'
 function App() {
 
   const [books, setBooks] = useState([]);
+  const [sort, setSort] = useState('rating');
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch('/api/books');
+      const response = await fetch(`/api/books?sort=${sort}`);
       const data = await response.json();
       setBooks(data);
     } catch (error) {
@@ -19,12 +20,12 @@ function App() {
     }
   };
 
-  useEffect(() => { fetchBooks(); }, []);
+  useEffect(() => { fetchBooks(); }, [sort]); //refetch books when sort changes
 
   return(
     <div>
     <Head />
-    <Sort />
+    <Sort setSort={setSort} />
     <Faq />
       <hr />
       {books.map((book, index) => <Cards

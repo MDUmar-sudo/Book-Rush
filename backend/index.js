@@ -3,10 +3,13 @@ import path from "path";
 import express from "express";
 import pg from "pg";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 
 
 const app = express();
 const port = 3000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
 
 // reading books.json
@@ -60,6 +63,29 @@ db.connect();
 }
 retrieveImage().catch(console.error); */
 
+
+/* 
+    Function to sort books based on the sort type
+*/
+
+async function bookSorter(sortType) {
+
+    switch (sortType) { 
+        case 'rating':
+            const queryRating = await db.query('SELECT * FROM books ORDER BY rating DESC');
+            return queryRating;
+        case 'date':
+            const queryDate = await db.query('SELECT * FROM books ORDER BY date_read DESC');
+            return queryDate;
+        case 'title':
+            const queryTitle = await db.query('SELECT * FROM books ORDER BY title ASC');
+            return queryTitle;
+        default:
+            return ( await db.query('SELECT * FROM books ORDER BY rating DESC'))
+    }  
+
+}
+
 app.get("/", (req, res) => { res.send("Hello World") });
 
 /* 
@@ -68,30 +94,34 @@ app.get("/", (req, res) => { res.send("Hello World") });
 
 app.get("/books", async (req, res) => {
 
-   try{ const result = await db.query('SELECT * FROM books ORDER BY id');
-       const books = result.rows.map((book) => {
-           
-        return {
-            code: book.code,
-            title: book.title,
-            writer: book.writer,
-            isbn: book.isbn,
-            rating: book.rating,
-            date_read: book.date_read,
-            book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null,
-            summary: book.summary,
-            buying_link: book.buying_link
-        };
-        
+    const sortType = req.query.sort;
+    console.log(sortType);
+    try {
+
+        const result = await bookSorter(sortType);
+        const books = result.rows.map((book) => {
+            return {
+                code: book.code,
+                title: book.title,
+                writer: book.writer,
+                isbn: book.isbn,
+                rating: book.rating,
+                date_read: book.date_read,
+                book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null,
+                summary: book.summary,
+                buying_link: book.buying_link
+            };
+            
        });
-       console.log(books[0].summary);
-    res.json(books);
+        res.json(books);
+        
    } catch (err) {
        console.error('Error fetching books:', err);
        res.status(500).json({ error: 'Internal Server Error' });
     }
     
 });
+
 
 /* 
     LISTENING TO PORT 3000
