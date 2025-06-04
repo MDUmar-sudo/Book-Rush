@@ -8,7 +8,7 @@ function FAQs() {
             <article>
                 <Header />
                 <h2>About my Summaries</h2>
-                <p>At <a href="#">book rush</a> I have a collection of my notes from the 13+ books I’ve read since 2015.
+                <p>At <a href="/">book rush</a> I have a collection of my notes from the 13+ books I’ve read since 2015.
                     This page is just to answer some questions about it.</p>
                 
                 <h3>Summary doesn’t replace the book</h3>
@@ -25,7 +25,7 @@ function FAQs() {
                 <p>I like to keep it simple, I'm never conserned about a specific author or genere. I choose my book according to my mood and situation. </p>
 
                 <hr />
-                <p>Go to <a href="#">book rush</a> to browse throug the summaries.</p>
+                <p>Go to <a href="/">book rush</a> to browse throug the summaries.</p>
                 <Comment />
                 
 

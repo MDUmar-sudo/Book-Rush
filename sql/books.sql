@@ -4,8 +4,13 @@ ORDER BY id ASC
 -- databse creation
 CREATE DATABASE book_rush;
 
+/* 
+	TABLE CREATION 
+*/
 
--- table creation
+
+-- Table books
+
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
 	code VARCHAR(50) UNIQUE,
@@ -15,6 +20,16 @@ CREATE TABLE books (
 	rating INT,
 	date_read DATE,
     book_image BYTEA
+);
+
+-- Table comments
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+	name VARCHAR(100),
+	email VARCHAR(100),
+    comment TEXT,
+	date DATE
 );
 
 -- table insertion
@@ -31,7 +46,11 @@ INSERT INTO books (code, title, writer, isbn, rating, date_read) VALUES
 ('slither', 'Slither: Carnal Prose', 'Urmila Deshpande', '978-9380658841', 7, TO_DATE('18-06-2021', 'DD-MM-YYYY')),
 ('mistakes', 'The 3 Mistakes Of My Life', 'Chetan Bhagat', '978-8129135513', 7, TO_DATE('15-03-2022', 'DD-MM-YYYY')),
 ('five', 'Five Point Someone', 'Chetan Bhagat', '978-8129135490', 7, TO_DATE('22-09-2021', 'DD-MM-YYYY')),
-('rich', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', '978-1612680194', 8, TO_DATE('12-06-2024', 'DD-MM-YYYY'));
+('rich', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', '978-1612680194', 8, TO_DATE('12-06-2024', 'DD-MM-YYYY'),
+('salesman', 'The Greatest Salesman In The World', 'Og Mandino', '978-0553277579', 9, TO_DATE('20-07-2024', 'DD-MM-YYYY')),
+('wish', 'Wish I Could Tell You', 'Durjoy Datta', '978-0143448334', 7, TO_DATE('05-05-2023', 'DD-MM-YYYY'))
+);
+
 
 -- book_images are inserted using Javascript with UPDATE cmd
 
@@ -179,3 +198,25 @@ UPDATE books SET
 			The book’s simple language, relatable anecdotes, and clear principles make it approachable even for beginners in finance. At its core, Rich Dad Poor Dad is about financial independence and choosing to be educated about money, not just academically successful. It’s about freedom—and the responsibility that comes with it.$$,
   buying_link = 'https://www.amazon.in/Rich-Dad-Poor-Middle-Updates/dp/1612680194'
 WHERE title = 'Rich Dad Poor Dad';
+
+UPDATE books SET 
+	summary = $$The Greatest Salesman in the World by Og Mandino is not just a book about sales—it’s a gentle, inspiring guide to living a meaningful and purpose-driven life. Told through the story of Hafid, a humble camel boy in ancient times who dreams of becoming a successful salesman, the book weaves timeless wisdom into a simple but powerful narrative.
+
+			Hafid’s journey is shaped by ten ancient scrolls, each containing a principle for personal growth and inner mastery. These scrolls don’t talk about sales techniques or strategies in the modern sense. Instead, they offer profound life lessons on persistence, love, self-discipline, purpose, and the power of good habits. Each scroll encourages the reader to build strength of character and lead with the heart, not just the head.
+
+			Mandino’s storytelling feels deeply human and uplifting, reminding us that success is not about quick wins or clever tricks, but about living each day with intention and integrity. Whether you’re in business, struggling with self-doubt, or simply trying to be better than you were yesterday, the book speaks to the soul.
+
+			At its core, The Greatest Salesman in the World is about believing in yourself, never giving up, and living in a way that inspires others by example.$$,
+	buying_link = 'https://www.amazon.in/Greatest-Salesman-World-Og-Mandino/dp/055327757X'
+WHERE title = 'The Greatest Salesman In The World';
+
+UPDATE books SET 
+	summary = $$Wish I Could Tell You by Durjoy Datta is a poignant and emotionally layered story about love, loss, and finding connection in the most unexpected places. Set against the world of an NGO that connects donors with those in need, the novel introduces us to Anusha and Ananth—two very different people with very different views on love and life.
+
+			  Anusha believes in the goodness of people and the emotional side of giving, while Ananth is practical, skeptical, and emotionally guarded. Their lives intersect when they both start working for the NGO, and despite their differences, a subtle bond begins to form. But just when things seem to fall into place, an unforeseen twist shatters everything, leaving behind heartbreak, confusion, and a trail of unanswered questions.
+
+			  Told through alternating perspectives, Datta explores how technology, social media, and real human emotions often collide. The novel beautifully captures the vulnerability of opening up to someone, the courage it takes to love again, and how sometimes the most meaningful connections are the ones we never expected.
+
+			  At its heart, Wish I Could Tell You is about the things we leave unsaid, and how even in silence, love can grow, heal, and transform. It's tender, thought-provoking, and deeply human.$$,
+	buying_link = 'https://www.amazon.in/Wish-I-Could-Tell-You/dp/0143448331'
+WHERE title='Wish I Could Tell You';

@@ -4,7 +4,7 @@ import express from "express";
 import pg from "pg";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-
+import nodemailer from "nodemailer"
 
 const app = express();
 const port = 3000;
@@ -32,7 +32,8 @@ db.connect();
 
 // function to insert image into database
 
-/* async function insertImage() {
+/* 
+async function insertImage() {
 
     const image_path = "C:\\Users\\Assassin\\Pictures\\Screenshots\\Book Cover\\";
     book.book_titles.map((book) => { 
@@ -44,8 +45,9 @@ db.connect();
         console.log('Image inserted successfully');
     });
 
-} */
-// insertImage().catch(console.error);
+}
+insertImage().catch(console.error); 
+*/
 
 // function to retrieve image from database
 
@@ -86,6 +88,21 @@ async function bookSorter(sortType) {
 
 }
 
+
+/* 
+    Function to get the current date in DD-MM-YYYY format
+*/
+
+function getCurrentDate(date) {
+
+    const dt = date.toISOString().split('T')[0];
+    const [year, month, day] = dt.split('-');
+    const formattedDate = `${day}-${month}-${year}`;
+
+    return formattedDate;
+
+}
+
 app.get("/", (req, res) => { res.send("Hello World") });
 
 /* 
@@ -95,7 +112,6 @@ app.get("/", (req, res) => { res.send("Hello World") });
 app.get("/books", async (req, res) => {
 
     const sortType = req.query.sort;
-    console.log(sortType);
     try {
 
         const result = await bookSorter(sortType);
@@ -106,7 +122,7 @@ app.get("/books", async (req, res) => {
                 writer: book.writer,
                 isbn: book.isbn,
                 rating: book.rating,
-                date_read: book.date_read,
+                date_read: getCurrentDate(book.date_read),
                 book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null,
                 summary: book.summary,
                 buying_link: book.buying_link
@@ -121,6 +137,76 @@ app.get("/books", async (req, res) => {
     }
     
 });
+
+/* 
+    POST request which receives comments details and insert into the database
+*/
+
+app.post("/comment", async (req, res) => {
+
+    const { name, email, comment } = req.body; 
+    try {
+
+        const result = await db.query('INSERT INTO Tcomment (name,email,comment,date) VALUES ($1,$2,$3,$4) RETURNING * ',
+                                      [name, email, comment, getCurrentDate(new Date())])
+        console.log(result.rows[0]);
+        res.status(200).json({ success: true });
+
+    }catch(err){
+        
+        console.error();
+        res.status(500).json({ success: false });
+        
+    }
+    
+});
+
+/* 
+    POST request which receives senders details and send email to the owner (authenticated user)
+*/
+
+app.post("/email", async (req, res) => {
+
+    const { name, email, message } = req.body;
+    try {
+
+        const transporter = nodemailer.createTransport({
+            host: "smtp.hostinger.com",
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            auth: {
+                user: process.env.SMTP_EMAIL,
+                pass: process.env.SMTP_EMAIL_PASSWORD,
+            },
+        });
+
+        // Wraping in an async IIFE so we can use await.
+        (async () => {
+            const info = await transporter.sendMail({
+                from: '"Book Rush Contact" <hey@callmeumar.com>', // must be a verified sender
+                to: "hey@callmeumar.com",
+                subject: `New message from ${name}`,
+                text: `You got a message from ${name} (${email}):\n\n${message}`,
+                html: `<p><strong>From:</strong> ${name} (${email})</p>
+                      <p>${message}</p>`,
+            });
+
+            console.log("Message sent:", info.messageId);
+
+        })();
+
+        res.status(200).json({ success: true });
+
+    } catch (err) {
+
+        console.error();
+        res.status(500).json({ success: false });
+
+    }
+
+});
+
+
 
 
 /* 
