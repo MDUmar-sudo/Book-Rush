@@ -2,8 +2,8 @@ import { useState } from "react";
 
 function Sort(props) {
     return (
-            <p>
-                Sorted with my top recommendations up top. Sort by <a href="#" onClick={()=>{props.setSort("title")}}>title</a>, <a href="#" onClick={()=>{props.setSort("date")}}> newest</a>, or <a href="#" onClick={()=>{props.setSort("rating")}}> best</a>.
+            <p className="sort">
+                Sorted with <span className="bold">my top recommendations up top.</span> Sort by <a className="link" href="#" onClick={()=>{props.setSort("title")}}>title</a>, <a className="link" href="#" onClick={()=>{props.setSort("date")}}> newest</a>, or <a className="link" href="#" onClick={()=>{props.setSort("rating")}}> best</a>.
             </p>
     );
 }

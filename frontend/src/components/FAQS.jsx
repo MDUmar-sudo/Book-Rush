@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./header";
 import Comment from "./comment.jsx";
+import CommentGallery from "./comment gallery.jsx";
 
 function FAQs() { 
     return (
@@ -27,6 +28,8 @@ function FAQs() {
                 <hr />
                 <p>Go to <a href="/">book rush</a> to browse throug the summaries.</p>
                 <Comment />
+
+                <CommentGallery/>
                 
 
             </article>

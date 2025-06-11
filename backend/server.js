@@ -1,109 +1,32 @@
-import fs from "fs";
 import path from "path";
 import express from "express";
-import pg from "pg";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import nodemailer from "nodemailer"
+import { encrypt, decrypt } from "./utility/encryption.js"
+import { bookSorter, getFormattedDate, getComments,putComments,insertImage,retrieveImage } from "./utility/dbquery.js";
 
-const app = express();
 const port = 3000;
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
-
-// reading books.json
-
-const books_json = fs.readFileSync(path.join(process.cwd(), "./books.json"), "utf-8");
-const book = JSON.parse(books_json);
-
-// database connection
-
-const db = new pg.Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: Number(process.env.DB_PORT),
-});
-db.connect();
-
 
 
 // function to insert image into database
 
 /* 
-async function insertImage() {
-
-    const image_path = "C:\\Users\\Assassin\\Pictures\\Screenshots\\Book Cover\\";
-    book.book_titles.map((book) => { 
-        const image = fs.readFileSync(`${image_path}${book}.png`); 
-        const name = book;
-
-        const query = 'UPDATE books SET book_image = $1 WHERE title = $2 ';
-        db.query(query, [image,name]);
-        console.log('Image inserted successfully');
-    });
-
-}
-insertImage().catch(console.error); 
+    insertImage().catch(console.error); 
 */
 
 // function to retrieve image from database
 
-/* async function retrieveImage() {
-
-    const res = await db.query('SELECT title, book_image FROM books');
-    res.rows.map((row) => { 
-        const imageData = row.book_image;
-        const name = row.title;
-        // fs.writeFileSync(`${name}.jpg`, imageData);
-    });
-
-    
-    console.log('Image saved as retrieved_image.jpg');
-}
-retrieveImage().catch(console.error); */
-
-
 /* 
-    Function to sort books based on the sort type
+    retrieveImage().catch(console.error); 
 */
 
-async function bookSorter(sortType) {
 
-    switch (sortType) { 
-        case 'rating':
-            const queryRating = await db.query('SELECT * FROM books ORDER BY rating DESC');
-            return queryRating;
-        case 'date':
-            const queryDate = await db.query('SELECT * FROM books ORDER BY date_read DESC');
-            return queryDate;
-        case 'title':
-            const queryTitle = await db.query('SELECT * FROM books ORDER BY title ASC');
-            return queryTitle;
-        default:
-            return ( await db.query('SELECT * FROM books ORDER BY rating DESC'))
-    }  
-
-}
-
-
-/* 
-    Function to get the current date in DD-MM-YYYY format
-*/
-
-function getCurrentDate(date) {
-
-    const dt = date.toISOString().split('T')[0];
-    const [year, month, day] = dt.split('-');
-    const formattedDate = `${day}-${month}-${year}`;
-
-    return formattedDate;
-
-}
-
-app.get("/", (req, res) => { res.send("Hello World") });
+app.get("/", (req, res) => { res.send("SERVER RUNNING...") });
 
 /* 
     GET request to fetch all books information from the database
@@ -122,7 +45,7 @@ app.get("/books", async (req, res) => {
                 writer: book.writer,
                 isbn: book.isbn,
                 rating: book.rating,
-                date_read: getCurrentDate(book.date_read),
+                date_read: getFormattedDate(book.date_read),
                 book_image: book.book_image ? `data:image/png;base64,${book.book_image.toString('base64')}` : null,
                 summary: book.summary,
                 buying_link: book.buying_link
@@ -139,6 +62,33 @@ app.get("/books", async (req, res) => {
 });
 
 /* 
+    GET request to fetch all books information from the database
+*/
+
+app.get("/comments", async (req, res) => {
+
+    try {
+
+        const result = await getComments();
+        const comments = result.rows.map((comment) => {
+            return {
+                id: comment.id,
+                name: comment.name,
+                comment: comment.comment,
+                date: getFormattedDate(comment.date)
+            };
+
+        });
+        res.json(comments);
+
+    } catch (err) {
+        console.error('Error fetching books:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+});
+
+/* 
     POST request which receives comments details and insert into the database
 */
 
@@ -147,8 +97,8 @@ app.post("/comment", async (req, res) => {
     const { name, email, comment } = req.body; 
     try {
 
-        const result = await db.query('INSERT INTO Tcomment (name,email,comment,date) VALUES ($1,$2,$3,$4) RETURNING * ',
-                                      [name, email, comment, getCurrentDate(new Date())])
+        const date = getFormattedDate(new Date())
+        const result = await putComments(name, encrypt(email), comment, date);
         console.log(result.rows[0]);
         res.status(200).json({ success: true });
 
@@ -171,8 +121,8 @@ app.post("/email", async (req, res) => {
     try {
 
         const transporter = nodemailer.createTransport({
-            host: "smtp.hostinger.com",
-            port: 465,
+            host: SMTP_HOST,
+            port: SMTP_PORT,
             secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.SMTP_EMAIL,
@@ -205,7 +155,6 @@ app.post("/email", async (req, res) => {
     }
 
 });
-
 
 
 

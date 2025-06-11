@@ -4,9 +4,7 @@ function Image(props) {
     return (
         <div className="image">
             <figure>
-                <a href="">
-                    <img width="150px" breadth="400px" src={props.image} alt="{props.title}" />
-                </a>
+                    <img src={props.image} alt="{props.title}" />
             </figure>
         </div>
     );  

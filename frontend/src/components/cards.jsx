@@ -6,7 +6,7 @@ import Info from "./info"
 
 function Cards(props) {
     return (
-        <div className="cards ">
+        <div className="cards">
             <Image image={props.image} />
             <Info
                 id={props.id}

@@ -1,5 +1,112 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+#root {
+  margin: 2rem 20%;
+  font-family: "Alumni Sans", sans-serif;
+  font-size: 26px;
+}
+
+/* 
+    Bold template class 
+*/
+.bold {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.bold2{
+    font-weight: 700;
+}
+
+/* 
+    Link template class 
+*/
+.link {
+  text-decoration: none;
+  color: blue;
+}
+.link:hover {
+  text-decoration: underline solid blue 1.5px;
+}
+
+.head h1 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+.head p {
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.header {
+  padding: 1rem 0;
+  font-family: "Oswald", sans-serif;
+  font-size: 4rem;
+  font-weight: 300;
+}
+.header a {
+  text-decoration: none;
+  color: black;
+}
+.header a:hover {
+  text-decoration: underline solid black 3px;
+}
+
+.sort {
+  margin-bottom: 1rem;
+}
+
+.faq {
+  margin-bottom: 2rem;
+}
+
+.cards {
+  margin: 6rem 0;
+}
+
+.image img {
+  width: 130px;
+  height: 200px;
+  margin: 0 1rem 1rem 0;
+  float:left;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.info {
+  display: block;
+  margin-top: -1rem;
+  text-align: left;
+}
+.info h1 {
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  color: rgb(16, 4, 193);
+  text-decoration: underline solid 2px;
+  margin-bottom: 2rem;
+}
+.info small{
+    font-size: 20px;
+    font-weight: 500;
+    color: cadetblue;
+}
+.info strong{
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(75, 127, 129);
+}
+.info p:first-of-type{
+    margin: 2rem 0;
+    white-space:pre-line;
+}
+.info p:last-of-type strong{
+    font-size: 26px;
+    color: rgb(73, 8, 133);
+}
+
