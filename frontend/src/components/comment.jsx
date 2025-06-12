@@ -1,7 +1,9 @@
 import React from "react";
 import Header from "./header";
+import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import ClearIcon from '@mui/icons-material/Clear';
 
-function Comment(){
+function Comment() {
 
     const [form, setForm] = React.useState({
         name: '',
@@ -9,9 +11,10 @@ function Comment(){
         comment: ''
     });
     const [status, setStatus] = React.useState("");
+    const [isHidden, setHidden] = React.useState(true);
 
-    function handleChange(e){
-        return setForm({...form,[e.target.name]:e.target.value});
+    function handleChange(e) {
+        return setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     async function handleSubmit(e) {
@@ -55,24 +58,23 @@ function Comment(){
     };
 
     return (
-        <div>
-            <Header/>
-            <h1>YOUR THOUGHTS?</h1>
-            <h1>PLEAVE A LEAVE REPLY:</h1>
+        isHidden ? (<div><CommentTwoToneIcon className="commentBtn attention-comment-btn" onClick={ ()=>{setHidden(false)}} /></div>) :(<div className="{`comment-form-container ${!isHidden ? 'show' : ''}`}">
+                                        <h1>Share your thoughts?</h1>
+                                        <h1>Please leave a reply:</h1>
+                                        <ClearIcon className="clear-btn" onClick={ ()=>{setHidden(true)}}/>
+                                        <form className="comment-form" onSubmit={handleSubmit}>
+                                            <label htmlFor="namef">Your Name</label>
+                                            <input onChange={handleChange} type="text" name="name" id="namef" value={form.name} required />
+                                            <label htmlFor="emailf">Your Email  <span>for my eyes only!</span></label>
+                                            <input onChange={handleChange} type="text" name="email" id="emailf" value={form.email} required />
+                                            <label htmlFor="comment">Your Comment</label>
+                                            <textarea onChange={handleChange} name="comment" id="commentf" cols={40} rows={10} value={form.comment} required></textarea>
+                                            <br />
+                                            <input className="submit-btn" type="submit" name="submit" value={"Post Comment"} />
+                                            <p>{status}</p>
+                                        </form>
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="namef">Your Name</label>
-                <input onChange={handleChange} type="text" name="name" id="namef" value={form.name} required/>
-                <label htmlFor="emailf">Your Email  <span>for my eyes only!</span></label>
-                <input onChange={handleChange} type="text" name="email" id="emailf" value={form.email} required />
-                <label htmlFor="comment">Your Comment</label>
-                <textarea onChange={handleChange} name="comment" id="commentf" cols={80} rows={10} value={form.comment} required></textarea>
-                <br />
-                <input type="submit" name="submit" value={"Post Comment"} />
-                <p>{ status}</p>
-            </form>
-
-        </div>
+                                    </div> )
     );
 };
 
