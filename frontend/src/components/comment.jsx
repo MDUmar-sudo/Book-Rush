@@ -68,7 +68,7 @@ function Comment() {
                                             <label htmlFor="emailf">Your Email  <span>for my eyes only!</span></label>
                                             <input onChange={handleChange} type="text" name="email" id="emailf" value={form.email} required />
                                             <label htmlFor="comment">Your Comment</label>
-                                            <textarea onChange={handleChange} name="comment" id="commentf" cols={40} rows={10} value={form.comment} required></textarea>
+                                            <textarea onChange={handleChange} name="comment" id="commentf" cols={10} rows={5} value={form.comment} required></textarea>
                                             <br />
                                             <input className="submit-btn" type="submit" name="submit" value={"Post Comment"} />
                                             <p>{status}</p>

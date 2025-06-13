@@ -26,6 +26,7 @@ function CommentGallery() {
 
     return (
         <div className="commentList">
+            <p>Comments</p>
             <ol>
                 {
                     comments.map((comment, index) => <Items

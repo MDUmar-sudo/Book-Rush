@@ -53,19 +53,18 @@ function Email() {
   };
 
   return (
-    <div>
+    <div className='email'>
       <Header />
       
-      <h2>CONTACT</h2>
-      <h3>REACH OUT AND SAY HELLO</h3>
+      <h2>Contact Me</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='email-form'>
           <label htmlFor="namef">Your Name</label>
           <input name="name" value={form.name} type="text" id='namef' onChange={handleChange} required />
           <label htmlFor="emailf">Your Email  <span>for my eyes only!</span></label>
           <input name="email" type='text' value={form.email} onChange={handleChange} id="emailf" required />
           <label htmlFor="message">Your Message</label>
-          <textarea name="message" id='messagef' value={form.message} onChange={handleChange} cols={80} rows={10} required />
+          <textarea name="message" id='messagef' value={form.message} onChange={handleChange} cols={20} rows={10} required />
           <button type="submit"><SendIcon/></button>
           <p>{status}</p>
         </form>

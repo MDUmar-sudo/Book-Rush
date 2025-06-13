@@ -119,17 +119,17 @@ app.post("/email", async (req, res) => {
 
     const { name, email, message } = req.body;
     try {
-
+        console.log(process.env.SMTP_HOST)
         const transporter = nodemailer.createTransport({
-            host: SMTP_HOST,
-            port: SMTP_PORT,
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT,
             secure: true, // true for 465, false for other ports
             auth: {
                 user: process.env.SMTP_EMAIL,
-                pass: process.env.SMTP_EMAIL_PASSWORD,
+                pass: process.env.SMTP_EMAIL_PASSWORD
             },
         });
-
+        
         // Wraping in an async IIFE so we can use await.
         (async () => {
             const info = await transporter.sendMail({
@@ -140,7 +140,7 @@ app.post("/email", async (req, res) => {
                 html: `<p><strong>From:</strong> ${name} (${email})</p>
                       <p>${message}</p>`,
             });
-
+            console.log("ok")
             console.log("Message sent:", info.messageId);
 
         })();
@@ -149,7 +149,7 @@ app.post("/email", async (req, res) => {
 
     } catch (err) {
 
-        console.error();
+        console.error("Email send failed:", err); 
         res.status(500).json({ success: false });
 
     }
