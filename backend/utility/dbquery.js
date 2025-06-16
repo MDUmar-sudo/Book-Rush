@@ -15,6 +15,9 @@ const db = new pg.Client({
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT),
+    ssl: {
+        require:true
+    }
 });
 db.connect();
 
@@ -89,7 +92,7 @@ export function getFormattedDate(date) {
 
     const dt = date.toISOString().split('T')[0];
     const [year, month, day] = dt.split('-');
-    const formattedDate = `${String(+day + 1)}-${month}-${year}`;
+    const formattedDate = `${String(day)}-${month}-${year}`;
     return formattedDate;
 
 }
@@ -100,7 +103,7 @@ export function getFormattedDate(date) {
 
 export async function getComments() {
     
-    const result = await db.query('SELECT * FROM Tcomment ORDER BY date');
+    const result = await db.query('SELECT * FROM comments ORDER BY date');
     return result;
 
 }
@@ -111,7 +114,7 @@ export async function getComments() {
 
 export async function putComments(name,email,comment,date) {
 
-    const result = await db.query("INSERT INTO Tcomment (name,email,comment,date) VALUES ($1,$2,$3,TO_DATE($4,'DD-MM-YYYY')) RETURNING * ",
+    const result = await db.query("INSERT INTO comments (name,email,comment,date) VALUES ($1,$2,$3,TO_DATE($4,'DD-MM-YYYY')) RETURNING * ",
                     [name, email, comment, date]);
     return result;
 

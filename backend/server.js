@@ -17,7 +17,7 @@ dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment 
 
 /* 
     insertImage().catch(console.error); 
-*/
+ */
 
 // function to retrieve image from database
 

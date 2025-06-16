@@ -46,10 +46,9 @@ INSERT INTO books (code, title, writer, isbn, rating, date_read) VALUES
 ('slither', 'Slither: Carnal Prose', 'Urmila Deshpande', '978-9380658841', 7, TO_DATE('18-06-2021', 'DD-MM-YYYY')),
 ('mistakes', 'The 3 Mistakes Of My Life', 'Chetan Bhagat', '978-8129135513', 7, TO_DATE('15-03-2022', 'DD-MM-YYYY')),
 ('five', 'Five Point Someone', 'Chetan Bhagat', '978-8129135490', 7, TO_DATE('22-09-2021', 'DD-MM-YYYY')),
-('rich', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', '978-1612680194', 8, TO_DATE('12-06-2024', 'DD-MM-YYYY'),
+('rich', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', '978-1612680194', 8, TO_DATE('12-06-2024', 'DD-MM-YYYY')),
 ('salesman', 'The Greatest Salesman In The World', 'Og Mandino', '978-0553277579', 9, TO_DATE('20-07-2024', 'DD-MM-YYYY')),
-('wish', 'Wish I Could Tell You', 'Durjoy Datta', '978-0143448334', 7, TO_DATE('05-05-2023', 'DD-MM-YYYY'))
-);
+('wish', 'Wish I Could Tell You', 'Durjoy Datta', '978-0143448334', 7, TO_DATE('05-05-2023', 'DD-MM-YYYY'));
 
 
 -- book_images are inserted using Javascript with UPDATE cmd
@@ -67,6 +66,7 @@ SELECT * FROM books ORDER BY rating DESC;
 
 
 -- Adding book summary and buying link columns
+ALTER TABLE  books ADD COLUMN summary TEXT, ADD COLUMN buying_link TEXT;
 
 UPDATE books SET 
   summary =  $$A Million Seconds Too Late by Joygopal Podder is a gripping crime thriller that delves into the dark underbelly of corporate power and familial secrets. The narrative kicks off with the shocking murder of a tycoon's daughter in her sleep, prompting a critical question: was she the intended victim, or was the actual target her twin sister?
