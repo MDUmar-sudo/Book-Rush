@@ -1,11 +1,19 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename)
+// dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 const algorithm = 'aes-256-cbc';
 const key = Buffer.from(process.env.ENCRYPTION_KEY);
 const iv = Buffer.from(process.env.IV_SECRET); //IV : Initialization Vector
+
 
 /* 
     Function to encrypt email
