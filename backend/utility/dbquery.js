@@ -23,7 +23,7 @@ db.connect();
 
 // reading books.json
 
-const books_json = fs.readFileSync(path.join(process.cwd(), "./books.json"), "utf-8");
+const books_json = fs.readFileSync(path.join(process.cwd(), "./backend/books.json"), "utf-8");
 const book = JSON.parse(books_json);
 
 
