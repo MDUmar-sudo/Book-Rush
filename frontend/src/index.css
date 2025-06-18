@@ -33,6 +33,11 @@
   text-decoration: underline solid blue 1.5px;
 }
 
+/*
+
+  HEADER
+
+*/
 .head h1 {
   font-family: "Oswald", sans-serif;
   font-weight: 400;
@@ -45,7 +50,6 @@
 }
 
 .header {
-  /* padding: 1rem 0; */
   font-family: "Oswald", sans-serif;
   font-size: 4rem;
   font-weight: 300;
@@ -58,6 +62,11 @@
   text-decoration: underline solid black 3px;
 }
 
+/*
+
+  BELOW HEADER
+
+*/
 .sort {
   margin-bottom: 1rem;
 }
@@ -66,6 +75,11 @@
   margin-bottom: 2rem;
 }
 
+/*
+
+  CARDS & COMPONENTS
+
+*/
 .cards {
   margin: 6rem 0;
 }
@@ -110,6 +124,11 @@
   color: rgb(73, 8, 133);
 }
 
+/*
+
+  FAQs
+
+*/
 .faqs h2 {
   font-family: "Oswald", sans-serif;
   margin: 1rem 0;
@@ -139,11 +158,17 @@
   font-weight: 500;
 }
 
+/*
+  
+  COMMENT ICON & COMMENT FORM
+
+*/
 .commentBtn {
   position: absolute;
   margin: 0 2rem;
   color: #46a5f2;
-  right: 20%;
+  right: 3%;
+  top: 5%;
   transform: scale(2);
   opacity: 80%;
   cursor: pointer;
@@ -171,7 +196,8 @@
 }
 
 .comment {
-  background-image: url(/pexels-valentin_21-808934417-32290329.jpg);
+  position: relative;
+  background-image: url(/assets/comment_bg.jpg);
   background-size: cover;
   background-position: center;
   height: 1000px;
@@ -179,15 +205,15 @@
   padding-top: 2rem;
 }
 .comment h1 {
-  position: relative;
-  left: 23%;
+  margin-left:23% ;
   color: rgb(233, 145, 31);
   -webkit-text-stroke: 0.5px #fff;
 }
 
 .clear-btn {
   position: absolute;
-  right: 35%;
+  right: 5%;
+  top: 1%;
   margin-top: 1rem;
   z-index: 100;
   color: white;
@@ -199,6 +225,7 @@
 }
 
 .comment-form {
+  position: relative;
   background-color: #121212;
   color: #949292;
   opacity: 90%;
@@ -206,7 +233,7 @@
   padding: 1rem 2rem;
   border-radius: 12px;
   max-width: 500px;
-  max-height: 500px;
+  max-height: 600px;
   margin: 0 auto;
   font-size: 1.2rem;
   font-family: "Oswald", sans-serif;
@@ -246,7 +273,7 @@
 .comment-form p {
   margin: 1rem 0;
   color: green;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .submit-btn {
@@ -291,7 +318,11 @@
   transition: 0s;
 }
 
-/* Comment Gallery Container */
+/*
+
+  COMMENT LIST
+
+*/
 .commentList {
   max-width: 100%;
   margin: 40px auto;
@@ -307,14 +338,12 @@
   font-weight: 500
 }
 
-/* Remove default list styling */
 .commentList ol {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Individual Comment Item */
 .commentList li {
   background: #ffffff;
   padding: 16px 20px;
@@ -324,13 +353,11 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect */
 .commentList li:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Comment Author and Date */
 .commentList cite {
   font-style: normal;
   font-weight: 600;
@@ -341,7 +368,6 @@
   font-weight: 700;
 }
 
-/* Comment Text */
 .commentList p:last-child {
   margin-top: 8px;
   line-height: 1.6;
@@ -351,6 +377,11 @@
   margin-top: 1rem;
 }
 
+/*
+
+  EMAIL FORM
+
+*/
 .email h2{
   font-size: 3rem;
   font-family: "Oswald",sans-serif;
@@ -402,7 +433,6 @@
   outline: none;
 }
 
-/* Send Button with Icon */
 .email-form button {
   display: flex;
   align-items: center;
@@ -428,9 +458,281 @@
   font-size: 1.2rem;
 }
 
-/* Status text */
 .email-form p {
   margin-top: 10px;
   font-size: 0.9rem;
   color: #444;
+}
+
+.copyright{
+  font-size: .8rem;
+  font-family: "Oswald", sans-serif;
+}
+
+/* 
+
+  MEDIA QUERIES
+
+*/
+
+/* Small phones (up to 400px) */
+@media (max-width: 400px) {
+  #root {
+    margin: 1rem 5%;
+    font-size: 15px;
+  }
+
+  .header {
+    font-size: 2.2rem;
+  }
+
+  .info h1,
+  .faqs h2,
+  .faqs h3,
+  .para {
+    font-size: 1.5rem !important;
+  }
+  .info strong,
+  .info small{
+    font-size: 15px;
+  }
+
+  .image img {
+    width: 80px;
+    height: 100px;
+  }
+  .comment h1{
+    font-size: 1rem;
+    margin-left: 10%;
+    -webkit-text-stroke: 0.3px #fff;
+  }
+  .commentBtn{
+    transform: scale(1);
+    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: attractPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes attractPulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .comment-form{
+    max-width: 250px;
+    max-height: 400px;
+    font-size: .8rem;
+  }
+  .comment-form input[type="text"],
+  .comment-form textarea{
+  padding: .4rem;
+  margin-top: .3rem ;
+  font-size: .8rem;
+  }
+  .comment-form p{
+    font-size: 8px;
+  }
+}
+
+/* Medium phones (401px to 480px) */
+@media (max-width: 480px) {
+  #root {
+    margin: 1rem 8%;
+    font-size: 20px;
+  }
+
+  .header {
+    font-size: 2.5rem;
+  }
+
+  .info h1 {
+    font-size: 1.8rem;
+  }
+
+  .faqs h2,
+  .faqs h3,
+  .para {
+    font-size: 1.8rem !important;
+  }
+  .info strong,
+  .info small{
+    font-size: 15px;
+  }
+  .image img {
+    width: 100px;
+    height: 130px;
+  }
+  .comment h1{
+    font-size: 1.2rem;
+    margin-left: 15%;
+    -webkit-text-stroke: 0.3px #fff;
+  }
+  .commentBtn{
+    transform: scale(1);
+    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: attractPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes attractPulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .comment-form{
+    max-width: 250px;
+    max-height: 400px;
+    font-size: .8rem;
+  }
+  .comment-form input[type="text"],
+  .comment-form textarea{
+  padding: .4rem;
+  margin-top: .3rem ;
+  font-size: .8rem;
+  }
+  .comment-form p{
+    font-size: 8px;
+  }
+}
+
+/* Larger phones (481px to 600px) */
+@media (max-width: 600px) {
+  #root {
+    margin: 1rem 10%;
+    font-size: 22px;
+  }
+
+  .header {
+    font-size: 3rem;
+  }
+  .info strong,
+  .info small{
+    font-size: 15px;
+  }
+
+  .image img {
+    width: 110px;
+    height: 170px;
+  }
+  .comment h1{
+    font-size: 1.5rem;
+    margin-left: 17%;
+    -webkit-text-stroke: 0.4px #fff;
+  }
+  .commentBtn{
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: attractPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes attractPulse {
+    0% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
+  .comment-form{
+    max-width: 300px;
+    max-height: 400px;
+    font-size: .8rem;
+  }
+  .comment-form input[type="text"],
+  .comment-form textarea{
+  padding: .4rem;
+  margin-top: .3rem ;
+  font-size: .8rem;
+  }
+  .comment-form p{
+    font-size: 12px;
+  }
+}
+
+/* Tablets (601px to 768px) */
+@media (max-width: 768px) {
+  #root {
+    margin: 2rem 10%;
+  }
+
+  .header {
+    font-size: 3.5rem;
+  }
+
+  .info h1 {
+    font-size: 2rem;
+  }
+  .comment h1{
+    font-size: 2rem;
+    margin-left: 5%;
+    -webkit-text-stroke: 0.5px #fff;
+  }
+  .commentBtn{
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: attractPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes attractPulse {
+    0% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* Laptops (769px to 1024px) */
+@media (max-width: 1024px) {
+  #root {
+    margin: 2rem 15%;
+  }
+
+  .header {
+    font-size: 3.8rem;
+  }
+
+  .image img {
+    width: 120px;
+    height: 160px;
+  }
+  .comment h1{
+    font-size: 1.6rem;
+    margin-left: 17%;
+    -webkit-text-stroke: 0.5px #fff;
+  }
+  .commentBtn{
+    transform: scale(1.4);
+    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: attractPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes attractPulse {
+    0% {
+      transform: scale(1.4);
+    }
+    50% {
+      transform: scale(1.6);
+    }
+    100% {
+      transform: scale(1.4);
+    }
+  }
 }

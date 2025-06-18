@@ -4,13 +4,15 @@ import Items from "./items.jsx";
 function CommentGallery() {
 
     const [comments, setComments] = useState([]);
+    const live_url = import.meta.env.VITE_LIVE_API_URL;
 
     // GET request is sent to the server side to get comments data
     const fetchComments = async () => {
 
         try {
             
-            const response = await fetch('/api/comments');
+            // const response = await fetch('/api/comments'); //local development 
+            const response = await fetch(`${live_url}/comments`);
             const data = await response.json();
             setComments(data);
 

@@ -12,6 +12,7 @@ function Comment() {
     });
     const [status, setStatus] = React.useState("");
     const [isHidden, setHidden] = React.useState(true);
+    const live_url = import.meta.env.VITE_LIVE_API_URL;
 
     function handleChange(e) {
         return setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +23,14 @@ function Comment() {
         e.preventDefault();
         try {
 
+            /* 
             const request = await fetch('/api/comment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            }); //local deployment
+             */ 
+            const request = await fetch(`${live_url}/comment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)
@@ -30,7 +38,7 @@ function Comment() {
             if (request.ok) {
 
                 setStatus("Sent");
-                setForm({ name: '', email: '', message: '' });
+                setForm({ name: '', email: '', comment: '' });
                 setTimeout(() => {
                     setStatus("");
                 }, 2000);
@@ -38,7 +46,7 @@ function Comment() {
             } else {
 
                 setStatus("Failed");
-                setForm({ name: '', email: '', message: '' });
+                setForm({ name: '', email: '', comment: '' });
                 setTimeout(() => {
                     setStatus("");
                 }, 2000);
@@ -48,7 +56,7 @@ function Comment() {
             
             console.error(err);
             setStatus("Error occurred");
-            setForm({ name: '', email: '', message: '' });
+            setForm({ name: '', email: '', comment: '' });
             setTimeout(() => {
                 setStatus("");
             }, 2000);
@@ -58,11 +66,11 @@ function Comment() {
     };
 
     return (
-        isHidden ? (<div><CommentTwoToneIcon className="commentBtn attention-comment-btn" onClick={ ()=>{setHidden(false)}} /></div>) :(<div className="{`comment-form-container ${!isHidden ? 'show' : ''}`}">
+        isHidden ? (<div><CommentTwoToneIcon className="commentBtn" onClick={ ()=>{setHidden(false)}} /></div>) :(<div className="comment-div">
                                         <h1>Share your thoughts?</h1>
                                         <h1>Please leave a reply:</h1>
-                                        <ClearIcon className="clear-btn" onClick={ ()=>{setHidden(true)}}/>
                                         <form className="comment-form" onSubmit={handleSubmit}>
+                                            <ClearIcon className="clear-btn" onClick={ ()=>{setHidden(true)}}/>
                                             <label htmlFor="namef">Your Name</label>
                                             <input onChange={handleChange} type="text" name="name" id="namef" value={form.name} required />
                                             <label htmlFor="emailf">Your Email  <span>for my eyes only!</span></label>

@@ -30,7 +30,7 @@ function FAQs() {
                 <div className="comment">
                     <Comment />
                 </div>   
-
+                <p className="copyright">© {new Date().getFullYear()} <a className="link" href="https://callmeumar.com/" target="_blank">MD UMAR</a></p>
                 <CommentGallery/>
                 
 

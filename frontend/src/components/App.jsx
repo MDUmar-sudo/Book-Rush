@@ -8,13 +8,15 @@ function App() {
 
   const [books, setBooks] = useState([]);
   const [sort, setSort] = useState('rating');
+  const live_url = import.meta.env.VITE_LIVE_API_URL;
 
   // GET request is sent to the server to get books data
   const fetchBooks = async () => {
 
     try {
 
-      const response = await fetch(`/api/books?sort=${sort}`);
+      // const response = await fetch(`/api/books?sort=${sort}`); //local deployment
+      const response = await fetch(`${live_url}/books?sort=${sort}`);
       const data = await response.json();
       setBooks(data);
 

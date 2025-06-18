@@ -8,6 +8,8 @@ import Header from "./header";
 function Email() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
+  const live_url = import.meta.env.VITE_LIVE_API_URL;
+  
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,13 +20,18 @@ function Email() {
     setStatus('Sending...');
 
     try {
-
+      /* 
         const res = await fetch('/api/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
+      }); //local deployment
+       */
+      const res = await fetch(`${live_url}/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
-
       if (res.ok) {
         
         setStatus("Sent");
