@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './components/App.jsx'
-import FAQs from './components/FAQS.jsx'
+import Faqs from './components/FAQS.jsx'
 import Email from './components/email.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/faqs" element={<Faqs />} />
           <Route path="/email" element={<Email />} />
         </Routes>
     </BrowserRouter>

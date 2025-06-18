@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "./header";
+import Header from "./header.jsx";
 import Comment from "./comment.jsx";
-import CommentGallery from "./comment gallery.jsx";
+import CommentGallery from "./CommentGallery.jsx";
 
-function FAQs() { 
+function Faqs() { 
     return (
         <div className="faqs">
             <article>
@@ -42,4 +42,4 @@ function FAQs() {
 
 };
 
-export default FAQs;
+export default Faqs;
