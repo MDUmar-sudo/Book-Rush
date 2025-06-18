@@ -1,4 +1,5 @@
 import path from "path";
+import cors from 'cors';
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
@@ -11,6 +12,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config({ path: path.resolve('./backend/.env') }); // Loading environment variables from .env
+
+const allowedOrigins = ['http://localhost:5173', 'https://bookrush.callmeumar.com'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
 
 
 // function to insert image into database

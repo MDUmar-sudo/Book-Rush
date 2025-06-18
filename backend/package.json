@@ -4,7 +4,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Tron Labz",
@@ -12,8 +13,10 @@
   "description": "This is the backend of the project. It is a Node.js application that uses Express.js to create a RESTful API.",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "luxon": "^3.6.1",
     "nodemailer": "^7.0.3",
     "pg": "^8.16.0"
   }

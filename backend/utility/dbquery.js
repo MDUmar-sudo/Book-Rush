@@ -2,12 +2,22 @@ import pg from "pg";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import { DateTime } from "luxon";
 
 // Loading environment variables from .env
 
 dotenv.config({ path: path.resolve('./backend/.env') }); 
 
 // database connection
+/* 
+const db = new pg.Client({
+    user: process.env.LOCAL_DB_USER,
+    host: process.env.LOCAL_DB_HOST,
+    database: process.env.LOCAL_DB_NAME,
+    password: process.env.LOCAL_DB_PASSWORD,
+    port: Number(process.env.LOCAL_DB_PORT),
+});
+ */
 
 const db = new pg.Client({
     user: process.env.DB_USER,
@@ -15,12 +25,17 @@ const db = new pg.Client({
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: Number(process.env.DB_PORT),
+    ssl: {
+        require:true
+    }
 });
+
 db.connect();
 
 // reading books.json
 
-const books_json = fs.readFileSync(path.join(process.cwd(), "./books.json"), "utf-8");
+const books_json = fs.readFileSync(path.join(process.cwd(), "./backend/books.json"), "utf-8"); //for concurrent local deployment
+// const books_json = fs.readFileSync(path.join(process.cwd(), "./books.json"), "utf-8"); //for local deployment of backend
 const book = JSON.parse(books_json);
 
 
@@ -87,9 +102,9 @@ export async function bookSorter(sortType) {
 
 export function getFormattedDate(date) {
 
-    const dt = date.toISOString().split('T')[0];
-    const [year, month, day] = dt.split('-');
-    const formattedDate = `${String(+day + 1)}-${month}-${year}`;
+    const formattedDate = DateTime.fromJSDate(date, { zone: 'utc' })
+                                  .setZone('Asia/Kolkata')
+                                  .toFormat('dd-MM-yyyy');
     return formattedDate;
 
 }
@@ -112,7 +127,7 @@ export async function getComments() {
 export async function putComments(name,email,comment,date) {
 
     const result = await db.query("INSERT INTO Tcomment (name,email,comment,date) VALUES ($1,$2,$3,TO_DATE($4,'DD-MM-YYYY')) RETURNING * ",
-                    [name, email, comment, date]);
+        [name, email, comment, date]);
     return result;
 
 }
